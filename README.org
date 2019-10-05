@@ -1,0 +1,8 @@
+#+TITLE: Alg
+
+An OCaml library specifying algebraic structures widely useful for software design.
+
+* TODO Push to gitlab
+* TODO Package fully
+* TODO Add tests
+* TODO Submit to opam
