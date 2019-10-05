@@ -34,6 +34,16 @@ module type S = sig
   val concat : t List.t ->  t
 end
 
+module type S2_base = sig
+  type ('a, 'b) t
+  val op : ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t
+end
+
+module type S2 = sig
+  include S2_base
+  val concat : ('a, 'b) t List.t ->  ('a, 'b) t
+end
+
 
 module Make (S:Base) : S with type t = S.t = struct
   include S
