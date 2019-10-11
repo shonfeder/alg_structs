@@ -50,3 +50,21 @@ module Make (S:Base) : S with type t = S.t = struct
 
   (* TODO repeated apply *)
 end
+
+let make (type a) op =
+  let module Base = (struct
+    type t = a
+    let op = op
+  end)
+  in
+  (module Make (Base) : S with type t = a)
+
+module Bool = struct
+  module Or = (val make (||))
+  module And = (val make (&&))
+end
+
+module Int = struct
+  module Sum = (val make (+))
+  module Product = (val make ( * ))
+end
