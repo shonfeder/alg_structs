@@ -1,3 +1,4 @@
+(* Nonempty lists *)
 module type List = sig
   type 'a t
   include Functor.S with type 'a t := 'a t
@@ -31,19 +32,9 @@ end
 
 module type S = sig
   include Base
+  val ( * ) : t -> t -> t
   val concat : t List.t ->  t
 end
-
-module type S2_base = sig
-  type ('a, 'b) t
-  val op : ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t
-end
-
-module type S2 = sig
-  include S2_base
-  val concat : ('a, 'b) t List.t ->  ('a, 'b) t
-end
-
 
 module Make (S:Base) : S with type t = S.t = struct
   include S
