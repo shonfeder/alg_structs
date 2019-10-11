@@ -8,3 +8,4 @@ An OCaml library specifying algebraic structures widely useful for software desi
 * TODO Submit to opam
 * Prior work
 - https://github.com/tel/ocaml-cats
+- http://blog.shaynefletcher.org/2017/05/more-type-classes-in-ocaml.html
