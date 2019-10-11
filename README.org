@@ -6,3 +6,5 @@ An OCaml library specifying algebraic structures widely useful for software desi
 * TODO Package fully
 * TODO Add tests
 * TODO Submit to opam
+* Prior work
+- https://github.com/tel/ocaml-cats
