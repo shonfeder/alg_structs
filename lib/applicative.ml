@@ -1,5 +1,6 @@
 module type Base = sig
   include Functor.S
+  val return : 'a -> 'a t
   val app : ('a -> 'b) t -> 'a t -> 'b t
 end
 
