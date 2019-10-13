@@ -40,11 +40,26 @@ module Make (B : Base) : S with type 'a t = 'a B.t = struct
   let mem t x ~equal = any ~f:(fun y -> equal x y) t
 end
 
-(* This is impossible with OCamls module sytems :( *)
-(* let make (type a) foldr =
+(* This is impossible currently impossible with OCamls module sytems :( since
+ * first class modules do not support type sharing of types with parameters
+ * (This is a symptom of having to support for higher kinded types )
+ *
+ * let make (type a) foldr =
  *   let module Base = (struct
  *     type _ t = a
  *     let foldr = foldr
  *   end : Base)
  *   in
  *   (module Make (Base) : S) *)
+
+module Option : S with type 'a t = 'a Option.t = struct
+  module Base = struct
+    include Option
+
+    let foldr f z = function
+      | None -> z
+      | Some x -> f x z
+  end
+
+  include Make (Base)
+end
