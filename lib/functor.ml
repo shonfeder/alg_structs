@@ -27,3 +27,5 @@ module Array : S with type 'a t = 'a Array.t = struct
   type 'a t = 'a Array.t
   let map ~f = Array.map f
 end
+
+(* TODO Hashtbl *)
