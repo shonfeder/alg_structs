@@ -2,13 +2,13 @@
 
 module type Base = sig
   type 'a t
-  val foldr : ('a -> 'b -> 'b) -> 'b -> 'a t -> 'b
+  val fold_right : f:('a -> 'b -> 'b) -> 'a t -> init:'b -> 'b
 end
 
 module type S = sig
   include Base
   val fold_map : m:(module Monoid.S with type t = 'm) -> f:('a -> 'm) -> 'a t -> 'm
-  val foldl : ('b -> 'a -> 'b) -> 'b -> 'a t -> 'b
+  val fold_left : f:('b -> 'a -> 'b) -> init:'b -> 'a t ->  'b
   (* TODO Folds over semigroups *)
 
   val to_list : 'a t -> 'a list
@@ -26,16 +26,16 @@ module Make (B : Base) : S with type 'a t = 'a B.t = struct
   include B
 
   let fold_map (type a) ~m:(module M : Monoid.S with type t = a) ~f t =
-    foldr (fun x y -> M.op (f x) y) M.unit t
+    fold_right ~f:(fun x y -> M.op (f x) y) ~init:M.unit t
   (* TODO *)
 
-  let foldl f z0 xs =
+  let fold_left ~f ~init xs =
     let f' x k z = k (f z x) in
-    foldr f' Fun.id xs z0
+    fold_right xs ~f:f' ~init:Fun.id init
 
-  let to_list t = foldr List.cons [] t
-  let is_empty t = foldr (fun _ _ -> false) true t
-  let length t = foldl (fun c _ -> c + 1) 0 t
+  let to_list t = fold_right ~f:List.cons ~init:[] t
+  let is_empty t = fold_right ~f:(fun _ _ -> false) ~init:true t
+  let length t = fold_left ~f:(fun c _ -> c + 1) ~init:0 t
   let any ~f t = fold_map ~m:(module Monoid.Bool.Or) ~f t
   let mem t x ~equal = any ~f:(fun y -> equal x y) t
 end
@@ -44,10 +44,10 @@ end
  * first class modules do not support type sharing of types with parameters
  * (This is a symptom of having to support for higher kinded types )
  *
- * let make (type a) foldr =
+ * let make (type a) fold_right =
  *   let module Base = (struct
  *     type _ t = a
- *     let foldr = foldr
+ *     let fold_right = fold_right
  *   end : Base)
  *   in
  *   (module Make (Base) : S) *)
@@ -56,10 +56,14 @@ module Option : S with type 'a t = 'a Option.t = struct
   module Base = struct
     include Option
 
-    let foldr f z = function
-      | None -> z
-      | Some x -> f x z
+    let fold_right ~f t ~init = match t with
+      | None -> init
+      | Some x -> f x init
   end
 
   include Make (Base)
+end
+
+module List : S with type 'a t = 'a List.t = struct
+  include Make (ListLabels)
 end
