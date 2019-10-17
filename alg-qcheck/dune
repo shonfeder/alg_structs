@@ -1,0 +1,5 @@
+(library
+ (name alg_qcheck)
+ (public_name alg.qcheck)
+ (libraries alg
+            qcheck))
