@@ -1,2 +1,8 @@
 (test
- (name alg))
+ (name test)
+ (libraries alg
+            alg.qcheck
+
+            alcotest
+            qcheck
+            qcheck-alcotest))

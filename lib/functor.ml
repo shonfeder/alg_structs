@@ -3,29 +3,22 @@ module type S = sig
   val map : f:('a -> 'b) -> 'a t -> 'b t
 end
 
-module Option : S with type 'a t = 'a Option.t = struct
-  type 'a t = 'a Option.t
-  let map ~f = Option.map f
+module Law (F : S) = struct
+  let (%) f g x = f (g x)
+  let identity x = F.map ~f:Fun.id x = x
+  let composition f g x = F.map ~f:(f % g) x = (F.map ~f % F.map ~f:g) x
 end
 
-module List : S with type 'a t = 'a List.t = struct
-  type 'a t = 'a List.t
-  let map ~f = List.map f
+module type UnlabeledFunctor = sig
+  type 'a t
+  val map : ('a -> 'b) -> 'a t -> 'b t
 end
 
-module Stream : S with type 'a t = 'a Stream.t = struct
-  type 'a t = 'a Stream.t
-  let map ~f s =
-    let next _ = match Stream.next s with
-      | x -> Some (f x)
-      | exception Stream.Failure -> None
-    in
-    Stream.from next
+module LabelMap (F : UnlabeledFunctor) : S with type 'a t = 'a F.t = struct
+  include F
+  let map ~f = map f
 end
 
-module Array : S with type 'a t = 'a Array.t = struct
-  type 'a t = 'a Array.t
-  let map ~f = Array.map f
-end
-
-(* TODO Hashtbl *)
+module Option = LabelMap (Option)
+module List = LabelMap (List)
+module Array = LabelMap (Array)

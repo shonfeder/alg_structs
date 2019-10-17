@@ -13,4 +13,19 @@
  (synopsis "Interfaces and module combinators for algebraic structures")
  (description "TODO")
  (depends
-  (dune (and :build (>= 1.11.3)))))
+  (dune (and :build (>= 1.11.3)))
+
+  (alcotest (and :with-test (>= 0.8.5)))
+  (qcheck (and :with-test (>= 0.11)))
+  (qcheck-alcotest (and :with-test (>= 0.11)))
+))
+
+(package
+ (name alg.qcheck)
+ (synopsis "qCheck generators for the Alg library")
+ (description "TODO")
+ (depends
+  (dune (and :build (>= 1.11.3)))
+
+  (qcheck (and :with-test (>= 0.11)))
+))

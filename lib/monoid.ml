@@ -1,37 +1,41 @@
 module type S = sig
   include Semigroup.S
   val unit : t
-  val concat : t list -> t
+  val mconcat : t list -> t
 end
 
-module type Base = sig
-  include Semigroup.Base
+module type Seed = sig
+  include Semigroup.Seed
   val unit : t
 end
 
-module Make (B : Base) : S with type t = B.t = struct
+module Make (B : Seed) : S with type t = B.t = struct
   include B
   include Semigroup.Make (B)
 
-  let concat t = List.fold_left op unit t
+  let mconcat t = List.fold_left op unit t
 end
 
+(* Constructors *)
+
 let make (type a) unit op =
-  let module Base = (struct
+  let module Seed = (struct
     type t = a
     let unit = unit
     let op = op
-  end : Base with type t = a)
+  end : Seed with type t = a)
   in
-  (module Make (Base) : S with type t = a)
+  (module Make (Seed) : S with type t = a)
 
 let of_semigroup (type a) (module S : Semigroup.S with type t = a) unit =
-  let module Base = (struct
+  let module Seed = (struct
     include S
     let unit = unit
-  end : Base with type t = a)
+  end : Seed with type t = a)
   in
-  (module Make (Base) : S with type t = a)
+  (module Make (Seed) : S with type t = a)
+
+(* Implementations *)
 
 module Bool = struct
   module Or = (val of_semigroup (module Semigroup.Bool.Or) false)
@@ -41,4 +45,11 @@ end
 module Int = struct
   module Sum = (val of_semigroup (module Semigroup.Int.Sum) 0)
   module Product = (val of_semigroup (module Semigroup.Int.Product) 1)
+end
+
+module Option = struct
+  module Make (M : Semigroup.S) = struct
+    module Semi = Semigroup.Option.Make (M)
+    include (val of_semigroup (module Semi) None)
+  end
 end
