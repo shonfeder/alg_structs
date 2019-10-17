@@ -1,5 +1,3 @@
-(** Catamorphisms *)
-
 module type Seed = sig
   type 'a t
   val fold_right : f:('a -> 'b -> 'b) -> 'a t -> init:'b -> 'b
