@@ -24,10 +24,7 @@ module type S = sig
   val any : f:('a -> bool) -> 'a t -> bool
   val mem : 'a t -> 'a -> equal:('a -> 'a -> bool) -> bool
   val max : compare:('a -> 'a -> int) -> 'a t -> 'a option
-
-  (* TODO min *)
-  (* TODO sum *)
-  (* TODO product *)
+  val min : compare:('a -> 'a -> int) -> 'a t -> 'a option
 end
 
 (** {1 Laws} *)

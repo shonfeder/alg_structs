@@ -15,19 +15,21 @@ module type S = sig
   val any : f:('a -> bool) -> 'a t -> bool
   val mem : 'a t -> 'a -> equal:('a -> 'a -> bool) -> bool
   val max : compare:('a -> 'a -> int) -> 'a t -> 'a option
-  (* TODO min *)
-  (* TODO sum *)
-  (* TODO product *)
+  val min : compare:('a -> 'a -> int) -> 'a t -> 'a option
 end
 
 module Law (C : S) = struct
 
 end
 
-
 let max_of_compare compare a b = match compare a b with
   | i when i < 0 -> b
   | i when i > 0 -> a
+  | _ -> a
+
+let min_of_compare compare a b = match compare a b with
+  | i when i < 0 -> a
+  | i when i > 0 -> b
   | _ -> a
 
 module Make (Seed : Seed) : S with type 'a t = 'a Seed.t = struct
@@ -49,12 +51,18 @@ module Make (Seed : Seed) : S with type 'a t = 'a Seed.t = struct
 
   let max (type a) ~compare t =
     let max' = max_of_compare compare in
-    let module Semi = (val Semigroup.make max' : Semigroup.S with type t = a) in
-    let module Opt_monoid = Monoid.Option.Make (Semi)
+    let module Max_semi = (val Semigroup.make max' : Semigroup.S with type t = a) in
+    let module Opt_max_monoid = Monoid.Option.Make (Max_semi)
     in
-    fold_map ~m:(module Opt_monoid) ~f:Option.some t
+    fold_map ~m:(module Opt_max_monoid) ~f:Option.some t
 
-  (* (fold_map ~f:(_max compare) t) *)
+  let min (type a) ~compare t =
+    let min' = min_of_compare compare in
+    let module Min_semi = (val Semigroup.make min' : Semigroup.S with type t = a) in
+    let module Opt_max_monoid = Monoid.Option.Make (Min_semi)
+    in
+    fold_map ~m:(module Opt_max_monoid) ~f:Option.some t
+    (* (fold_map ~f:(_max compare) t) *)
 
 end
 
