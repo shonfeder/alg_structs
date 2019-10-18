@@ -30,9 +30,9 @@ inspiration from them
   focused on specifying the structures, whereas =alg_structs= also provides
   implementations for common data types along with other utilities.
 
-- Yaron Minsky, Anil Madhavapeddy, Jason Hickey's [[https://dev.realworldocaml.org/first-class-modules.html][Real World Ocaml (2nd
-  Edition)]] :: Specifically the chapter on first-class modules, which had to
-  refer back to several times.
+- Yaron Minsky, Anil Madhavapeddy, Jason Hickey's [[https://dev.realworldocaml.org/first-class-modules.html][Real World Ocaml (2nd Edition)]] ::
+  Specifically the chapter on first-class modules, which had to refer back to
+  several times.
 
 - Joel Björnson's [[http://blog.shaynefletcher.org/2017/05/more-type-classes-in-ocaml.html][More type classes]] :: This post provided some helpful guidance
   on hacking the module system to ape typeclasses.
