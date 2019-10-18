@@ -38,5 +38,7 @@ inspiration from them
   on hacking the module system to ape typeclasses.
 
 * Tasks
-** TODO Add a support/adaptation module for integration with Base/Core
-** TODO Expanded implementations of common data types
+- [ ] Add a support adapter package for integration with Base/Core
+- [ ] Expanded implementations of common data types
+- [ ] Add COC
+- [ ] Add CONTRIBUTING file
