@@ -24,7 +24,7 @@ sig
   end
 
   (** [test (module F)] is a list of {!module:QCheck} property based tests that
-      check whether the {{!module:Alg.Functor.Law} Functor Laws} hold for the
+      checks whether the {{!module:Alg.Functor.Law} Functor Laws} hold for the
       given implementation [F]. *)
   val test : (module S) -> Test.t list
 

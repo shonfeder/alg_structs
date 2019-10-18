@@ -1,5 +1,5 @@
 open QCheck
-open Alg
+open Alg_structs
 
 let property name = Test.make ~name
 
@@ -8,7 +8,7 @@ let suite name tests =
   (name, tests)
 
 let functor_laws =
-  let open Alg_qcheck.Functor in
+  let open Alg_structs_qcheck.Functor in
   suite "Functor Laws" @@ tests
     [
       (module struct
@@ -31,7 +31,7 @@ let functor_laws =
     ]
 
 let semigroup_laws =
-  let open Alg_qcheck.Semigroup in
+  let open Alg_structs_qcheck.Semigroup in
   suite "Semigroup Laws" @@ tests
     [
       (module struct
@@ -72,7 +72,7 @@ let semigroup_laws =
     ]
 
 let applicative_laws =
-  let open Alg_qcheck.Applicative in
+  let open Alg_structs_qcheck.Applicative in
   suite "Applicative Laws" @@ tests
     [
       (module struct
