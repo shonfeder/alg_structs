@@ -6,10 +6,10 @@ implementation of software.
 There are currently no external dependencies.
 
 I view this library as an experiment to determine whether easy access to such
-mechanisms can be used to advantage in OCaml programs. Subsequent versions are
-subject to breaking changes as the usefulness of the current implementation is
-tested and evaluated, however proper semantic versioning will be used to signal
-any breaking changes.
+mechanisms can be used to any advantage in OCaml programs. Subsequent versions
+are subject to breaking changes as the usefulness of the current implementation
+is tested and evaluated, however proper semantic versioning will be used to
+signal any breaking changes.
 
 The library is modeled after a fragment of Haskell's rich ecosystem of algebraic
 structures, implemented via typeclasses. Most of the code in here started out as
@@ -19,16 +19,19 @@ where it seemed appropriate.
 
 * Prior work
 
-I consulted the following while working on this library, and took lots of
-inspiration from them
+I consulted the following while working on this library, and took at least some
+inspiration from each of them:
 
 - Joseph Abrahamson's [[https://github.com/tel/ocaml-cats][ocaml-cats]] :: =ocaml-cats= is a well structured and well
   documented collection of signatures specifying a number of category theoretic
   structures. Had I discovered that work prior to making substantial progress
   here, I would have considered forking it or basing the structure of this
-  library more closely off of that one. However, =ocaml-cats= is narrowly
-  focused on specifying the structures, whereas =alg_structs= also provides
-  implementations for common data types along with other utilities.
+  library more closely off of that one. There is an essential difference between
+  the aims of these libraries however, =ocaml-cats= is narrowly focused on
+  specifying the structures, whereas =alg_structs= also provides implementations
+  for common data types along with other utilities. =ocaml-cats= currently has a
+  more extensive catalog of specifications, and the specifications are more
+  principled.
 
 - Yaron Minsky, Anil Madhavapeddy, Jason Hickey's [[https://dev.realworldocaml.org/first-class-modules.html][Real World Ocaml (2nd Edition)]] ::
   Specifically the chapter on first-class modules, which had to refer back to
@@ -38,7 +41,9 @@ inspiration from them
   on hacking the module system to ape typeclasses.
 
 * Tasks
-- [ ] Add a support adapter package for integration with Base/Core
-- [ ] Expanded implementations of common data types
-- [ ] Add COC
-- [ ] Add CONTRIBUTING file
+** TODO Set up CI
+** TODO Set docs to build into github page
+** TODO Add COC
+** TODO Add CONTRIBUTING file
+** TODO Add a support adapter package for integration with Base/Core
+** TODO Expanded implementations of common data types
