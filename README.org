@@ -43,7 +43,7 @@ inspiration from each of them:
 * Tasks
 ** TODO Set up CI
 ** TODO Set docs to build into github page
-** TODO Add COC
+** TODO Add CoC
 ** TODO Add CONTRIBUTING file
 ** TODO Add a support adapter package for integration with Base/Core
 ** TODO Expanded implementations of common data types
