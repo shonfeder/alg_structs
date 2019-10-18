@@ -1,11 +1,42 @@
-#+TITLE: Alg
+#+TITLE: =alg_structs=: Algebraic Structures in OCaml Structs
 
-An OCaml library specifying algebraic structures widely useful for software design.
+An OCaml library specifying algebraic structures useful in the design and
+implementation of software.
 
-* TODO Push to gitlab
-* TODO Package fully
-* TODO Add tests
-* TODO Submit to opam
+There are currently no external dependencies.
+
+I view this library as an experiment to determine whether easy access to such
+mechanisms can be used to advantage in OCaml programs. Subsequent versions are
+subject to breaking changes as the usefulness of the current implementation is
+tested and evaluated, however proper semantic versioning will be used to signal
+any breaking changes.
+
+The library is modeled after a fragment of Haskell's rich ecosystem of algebraic
+structures, implemented via typeclasses. Most of the code in here started out as
+direct ports of the corresponding Haskell typeclasses. However, I have taken
+liberties to adapt the implementations to be more amenable to idiomatic OCaml
+where it seemed appropriate.
+
 * Prior work
-- https://github.com/tel/ocaml-cats
-- http://blog.shaynefletcher.org/2017/05/more-type-classes-in-ocaml.html
+
+I consulted the following while working on this library, and took lots of
+inspiration from them
+
+- Joseph Abrahamson's [[https://github.com/tel/ocaml-cats][ocaml-cats]] :: =ocaml-cats= is a well structured and well
+  documented collection of signatures specifying a number of category theoretic
+  structures. Had I discovered that work prior to making substantial progress
+  here, I would have considered forking it or basing the structure of this
+  library more closely off of that one. However, =ocaml-cats= is narrowly
+  focused on specifying the structures, whereas =alg_structs= also provides
+  implementations for common data types along with other utilities.
+
+- Yaron Minsky, Anil Madhavapeddy, Jason Hickey's [[https://dev.realworldocaml.org/first-class-modules.html][Real World Ocaml (2nd
+  Edition)]] :: Specifically the chapter on first-class modules, which had to
+  refer back to several times.
+
+- Joel Björnson's [[http://blog.shaynefletcher.org/2017/05/more-type-classes-in-ocaml.html][More type classes]] :: This post provided some helpful guidance
+  on hacking the module system to ape typeclasses.
+
+* Tasks
+** TODO Add a support/adaptation module for integration with Base/Core
+** TODO Expanded implementations of common data types
