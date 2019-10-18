@@ -1,5 +1,5 @@
 (lang dune 1.11)
-(name alg)
+(name alg_structs)
 
 (generate_opam_files true)
 
@@ -9,7 +9,7 @@
 (bug_reports "TODO")
 
 (package
- (name alg)
+ (name alg_structs)
  (synopsis "Interfaces and module combinators for algebraic structures")
  (description "TODO")
  (depends
@@ -21,11 +21,11 @@
 ))
 
 (package
- (name alg.qcheck)
- (synopsis "qCheck generators for the Alg library")
+ (name alg_structs_qcheck)
+ (synopsis "Provides qCheck generators for laws of alg_structs")
  (description "TODO")
  (depends
   (dune (and :build (>= 1.11.3)))
 
-  (qcheck (and :with-test (>= 0.11)))
+  (qcheck (>= 0.11))
 ))

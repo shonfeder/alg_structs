@@ -1,4 +1,5 @@
 open QCheck
+module Alg = Alg_structs
 
 let test_law structure impl law =
   let name = Printf.sprintf "%s - %s: %s"  structure impl law in

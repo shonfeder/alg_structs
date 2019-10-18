@@ -1,5 +1,4 @@
 (library
- (name alg_qcheck)
- (public_name alg.qcheck)
- (libraries alg
+ (public_name alg_structs_qcheck)
+ (libraries alg_structs
             qcheck))
