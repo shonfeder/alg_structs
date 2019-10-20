@@ -77,6 +77,12 @@ let semigroup_laws =
        *   let name = "Semigroup.Endo for (int -> int)"
        *   let arbitrary = Alg_structs_qcheck.Utils.int_fun
        * end) *)
+
+      (module struct
+        include Semigroup.Dual.Make (Semigroup.Int.Sum)
+        let name = "Dual.Make (Int.Sum)"
+        let arbitrary = int
+      end);
     ]
 
 let applicative_laws =
