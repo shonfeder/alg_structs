@@ -73,3 +73,15 @@ module Option = struct
     include Make (Seed)
   end
 end
+
+module Endo = struct
+  module Make (T : Triv.S) : S with type t = (T.t -> T.t) = struct
+    let compose : (T.t -> T.t) -> (T.t -> T.t) -> (T.t -> T.t) =
+      fun f g x -> f (g x)
+    include (val make compose)
+  end
+
+  let make (type a) (_ : a) =
+    let module Triv = struct type t = a end in
+    (module Make (Triv) : S with type t = a -> a)
+end

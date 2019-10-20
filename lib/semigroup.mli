@@ -72,6 +72,8 @@ val make : ('a -> 'a -> 'a) -> (module S with type t = 'a)
 
 (** {1 Implementations} *)
 
+(** TODO Document implementations *)
+
 module Bool : sig
   module Or : S with type t = bool
   module And : S with type t = bool
@@ -84,4 +86,60 @@ end
 
 module Option : sig
   module Make (S : S) : S with type t = S.t Option.t
+end
+
+(** [Endo] is a semigroup where the operator is the composition of functions
+    with input and output of the same type.
+
+    Or, to paraphrase the
+    {{:http://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Semigroup.html#t:Endo}
+    Haskell docs}, [Endo] implements "the semigroup of endomorphisms under
+    composition". "Endomorphism" just meaning a morphism with the same object
+    for its source and target, i.e., (here) a function with input and output of
+    same type.
+
+    E.g. using the first-order module generator {!val:Endo.make}, we can make the
+    [Endo] semigroup over functions of type [string -> string] thus:
+
+    {[
+      # module E = (val Semigroup.Endo.make "");;
+      module E :
+      sig
+        type t = string -> string
+        val op : t -> t -> t
+        val ( * ) : t -> t -> t
+        val concat : t NonEmptyList.t -> t
+      end;;
+
+      # let comp = E.( (fun y -> "Hello, " ^ y) * (fun x -> x ^ "!") );;
+      val comp : E.t = <fun>;;
+
+      # comp "OCaml";;
+      - : string = "Hello, OCaml!"
+    ]} *)
+module Endo : sig
+
+  (** [Make (T)] is a module implementing the [Endo] semigroup for functions
+      over type [T.t] *)
+  module Make (T : Triv.S) : S with type t = (T.t -> T.t)
+
+  (** [make x] is a first order module implementing the [Endo] semigroup for
+      functions [(t -> t)] where [t] is the type of the arbitrary value [x].
+
+      Note that [x] is only used for it's type, and the particular value
+      supplied has no effect.
+
+      You can lift the result back into the module like so:
+
+      {[
+        # module E = (val Semigroup.Endo.make 1);;
+        module E :
+        sig
+          type t = int -> int
+          val op : t -> t -> t
+          val ( * ) : t -> t -> t
+          val concat : t NonEmptyList.t -> t
+        end
+      ]} *)
+  val make : 'a -> (module S with type t = 'a -> 'a)
 end

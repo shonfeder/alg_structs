@@ -69,6 +69,14 @@ let semigroup_laws =
         let name = "Option.Make (Int.Sum)"
         let arbitrary = option int
       end);
+
+      (* TODO Figure out if it's possible to test this using the framework,
+              or it needs a custom test written *)
+      (* (module struct
+       *   include (val Semigroup.Endo.make 1)
+       *   let name = "Semigroup.Endo for (int -> int)"
+       *   let arbitrary = Alg_structs_qcheck.Utils.int_fun
+       * end) *)
     ]
 
 let applicative_laws =
