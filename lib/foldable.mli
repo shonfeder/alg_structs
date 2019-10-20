@@ -1,4 +1,3 @@
-(* TODO RENAME? *)
 (** TODO description *)
 
 (** {1 Seed} *)
@@ -32,11 +31,50 @@ end
     {{!module-type:S} Foldable} in the form of predicates that should be true
     for any arguments of the appropriate type.
 
-    You can use {!module:Alg_qcheck.Foldable} to generate property based
+    You can use the [alg_structs_qcheck] package to generate property based
     tests of these laws for new modules satisfying this interface.
 
-    @param A An implementation of {{!module-type: S} Foldable} *)
-module Law (C : S) : sig
+    @param F An implementation of {{!module-type: S} Foldable} *)
+module Law (F : S) : sig
+
+  (** [fold_right_is_fold_mapped_endo_monoid f init t] is [true] when
+
+      {[
+        F.fold_right ~f ~init t = (F.fold_map ~m ~f t) init
+      ]}
+
+      where [init] has type [a] and [m] is the {{!module:Monoid.Endo} Endo
+      monoid} over functions of type [a -> a]. *)
+  val fold_right_is_fold_mapped_endo_monoid : ('a -> 'b -> 'b) -> 'b -> 'a F.t -> bool
+
+
+  (** [fold_left_is_fold_mapped_dual_endo_monoid f init t] is [true] when
+
+      {[
+        F.fold_right ~f ~init t = (F.fold_map ~m ~f:(Fun.flip f) t) init
+      ]}
+
+      where [init] has type [a] and [m] is the {{!module:Monoid.Dual} Dual} of
+      the {{!module:Monoid.Endo} Endo monoid} over functions of type [a ->
+      a]. *)
+  val fold_left_is_fold_mapped_dual_endo_monoid : ('a -> 'a -> 'a) -> 'a -> 'a F.t -> bool
+
+
+  (** [fold_is_foldmap_id (module M) t] is [true] when
+
+      {[
+        F.fold (module M) t = F.fold_map ~m:(module M) ~f:Fun.id t
+      ]}*)
+  val fold_is_foldmap_id : (module Monoid.S with type t = 'a) -> 'a F.t -> bool
+
+  (** [length_is_fold_mapped_sum] is [true] when
+
+      {[
+        F.length t = F.fold_map ~m ~f:(Fun.const 1) t
+      ]}
+
+      where [m] is {!module:Monoid.Int.Sum}. *)
+  val length_is_fold_mapped_sum : 'a F.t -> bool
 end
 
 (** {1 Constructors}

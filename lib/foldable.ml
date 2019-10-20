@@ -17,8 +17,21 @@ module type S = sig
   val min : compare:('a -> 'a -> int) -> 'a t -> 'a option
 end
 
-module Law (C : S) = struct
+module Law (F : S) = struct
+  let fold_right_is_fold_mapped_endo_monoid (type a) f (init : a) t =
+    let m = Monoid.Endo.make init in
+    F.fold_right ~f ~init t = (F.fold_map ~m ~f t) init
 
+  let fold_left_is_fold_mapped_dual_endo_monoid (type a) f (init : a) t =
+    let m = Monoid.Endo.make init |> Monoid.Dual.dualize in
+    F.fold_right ~f ~init t = (F.fold_map ~m ~f:(Fun.flip f) t) init
+
+  let fold_is_foldmap_id (type a) (module M : Monoid.S with type t = a) (t : a F.t) =
+    F.fold (module M) t = F.fold_map ~m:(module M) ~f:Fun.id t
+
+  let length_is_fold_mapped_sum t =
+    let m = (module Monoid.Int.Sum : Monoid.S with type t = int) in
+    F.length t = F.fold_map ~m ~f:(Fun.const 1) t
 end
 
 let max_of_compare compare a b = match compare a b with
