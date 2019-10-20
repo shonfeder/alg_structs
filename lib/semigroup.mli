@@ -12,7 +12,7 @@ module type Seed = sig
   val op : t -> t -> t
 end
 
-(** As !{module-type:Seed} but for parameteric types of one variable *)
+(** As {!module-type:Seed} but for parameteric types of one variable *)
 module type Seed1 = sig
   type 'a t
 
