@@ -48,8 +48,8 @@ module Int = struct
 end
 
 module Option = struct
-  module Make (M : Semigroup.S) = struct
-    module Semi = Semigroup.Option.Make (M)
+  module Make (S : Semigroup.S) = struct
+    module Semi = Semigroup.Option.Make (S)
     include (val of_semigroup (module Semi) None)
   end
 end
