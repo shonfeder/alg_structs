@@ -53,3 +53,14 @@ module Option = struct
     include (val of_semigroup (module Semi) None)
   end
 end
+
+module Endo = struct
+  module Make (T : Triv.S) = struct
+    module Semi = Semigroup.Endo.Make (T)
+    include (val of_semigroup (module Semi) (Fun.id : T.t -> T.t))
+  end
+
+  let make (type a) (x : a) =
+    let semi = Semigroup.Endo.make x in
+    of_semigroup semi (Fun.id : a -> a)
+end
