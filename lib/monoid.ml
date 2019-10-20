@@ -55,7 +55,7 @@ module Option = struct
 end
 
 module Endo = struct
-  module Make (T : Triv.S) = struct
+  module Make (T : Triv.S) : S with type t = (T.t -> T.t) = struct
     module Semi = Semigroup.Endo.Make (T)
     include (val of_semigroup (module Semi) (Fun.id : T.t -> T.t))
   end
@@ -63,4 +63,14 @@ module Endo = struct
   let make (type a) (x : a) =
     let semi = Semigroup.Endo.make x in
     of_semigroup semi (Fun.id : a -> a)
+end
+
+module Dual = struct
+  module Make (M : S) : S with type t = M.t = struct
+    module Semi_dual = Semigroup.Dual.Make (M)
+    include (val of_semigroup (module Semi_dual) M.unit)
+  end
+
+  let dualize (type a) (module M : S with type t = a) =
+    (module Make (M) : S with type t = a)
 end

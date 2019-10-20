@@ -85,3 +85,12 @@ module Endo = struct
     let module Triv = struct type t = a end in
     (module Make (Triv) : S with type t = a -> a)
 end
+
+module Dual = struct
+  module Make (S : S) : S with type t = S.t = struct
+    include S
+    let op = Fun.flip op
+  end
+
+  let make op = make (Fun.flip op)
+end

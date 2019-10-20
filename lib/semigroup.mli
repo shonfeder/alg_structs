@@ -45,8 +45,8 @@ end
     {{!module-type:S} Semigroup} in the form of predicates that should be true
     for any arguments of the appropriate type.
 
-    You can use {!module:Alg_qcheck.Semigroup} to generate property based tests
-    of these laws for new modules satisfying interface.
+    You can use the [alg_structs_qcheck] package to generate property based
+    tests of these laws for new modules satisfying the interface.
 
     @param S An implementation of a {{!module-type: S} Semigroup} *)
 module Law (S : S) : sig
@@ -142,4 +142,15 @@ module Endo : sig
         end
       ]} *)
   val make : 'a -> (module S with type t = 'a -> 'a)
+end
+
+(** [Dual] allows constructing the dual semigroup for a given semigroup.
+    I.e., a semigroup with the arguments of it's operator reversed. *)
+module Dual : sig
+
+  (** [Make (S)] is [S] except that [S.op] is defined as [Fun.flip S.op]. *)
+  module Make (S : S) : S with type t = S.t
+
+  (** [make op] is [Semigroup.make (Fun.flip op)]. *)
+  val make : ('a -> 'a -> 'a) -> (module S with type t = 'a)
 end
