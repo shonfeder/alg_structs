@@ -5,10 +5,9 @@ end
 
 module type S = sig
   include Seed
+  val fold : (module Monoid.S with type t = 'a) -> 'a t -> 'a
   val fold_map : m:(module Monoid.S with type t = 'm) -> f:('a -> 'm) -> 'a t -> 'm
   val fold_left : f:('b -> 'a -> 'b) -> init:'b -> 'a t ->  'b
-  (* TODO Folds over semigroups *)
-
   val to_list : 'a t -> 'a list
   val is_empty : 'a t -> bool
   val length : 'a t -> int
@@ -37,7 +36,9 @@ module Make (Seed : Seed) : S with type 'a t = 'a Seed.t = struct
 
   let fold_map (type a) ~m:(module M : Monoid.S with type t = a) ~f t =
     fold_right ~f:(fun x y -> M.op (f x) y) ~init:M.unit t
-  (* TODO *)
+
+  let fold (type a) (module M : Monoid.S with type t = a) t =
+    fold_map ~m:(module M) ~f:Fun.id t
 
   let fold_left ~f ~init xs =
     let f' x k z = k (f z x) in

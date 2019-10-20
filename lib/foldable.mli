@@ -14,10 +14,9 @@ end
 
 module type S = sig
   include Seed
+  val fold : (module Monoid.S with type t = 'a) -> 'a t -> 'a
   val fold_map : m:(module Monoid.S with type t = 'm) -> f:('a -> 'm) -> 'a t -> 'm
   val fold_left : f:('b -> 'a -> 'b) -> init:'b -> 'a t ->  'b
-  (* TODO Folds over semigroups *)
-
   val to_list : 'a t -> 'a list
   val is_empty : 'a t -> bool
   val length : 'a t -> int
