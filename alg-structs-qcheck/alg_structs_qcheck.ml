@@ -11,3 +11,6 @@ module Applicative = Applicative
 
 (** QCheck tests of laws {{!module:Alg_structs.Semigroup.Law} Semigroup Laws} *)
 module Semigroup = Semigroup
+
+(** QCheck tests of laws {{!module:Alg_structs.Foldable.Law} Foldable Laws} *)
+module Foldable = Foldable

@@ -108,6 +108,29 @@ let applicative_laws =
       end);
     ]
 
+let foldable_laws =
+  let open Alg_structs_qcheck.Foldable in
+  suite "Foldable Laws" @@ tests
+    [
+      (module struct
+        include Foldable.Option
+        let name = "Foldable.Option"
+        let arbitrary = option
+      end);
+
+      (module struct
+        include Foldable.List
+        let name = "Foldable.List"
+        let arbitrary = list
+      end);
+
+      (module struct
+        include Foldable.Array
+        let name = "Foldable.Array"
+        let arbitrary = array
+      end);
+    ]
+
 let () =
   Alcotest.run "alg"
     [ functor_laws
