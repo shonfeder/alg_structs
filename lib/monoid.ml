@@ -60,8 +60,8 @@ module Endo = struct
     include (val of_semigroup (module Semi) (Fun.id : T.t -> T.t))
   end
 
-  let make (type a) (x : a) =
-    let semi = Semigroup.Endo.make x in
+  let make (type a) (proxy : a Util.proxy) =
+    let semi = Semigroup.Endo.make proxy in
     of_semigroup semi (Fun.id : a -> a)
 end
 

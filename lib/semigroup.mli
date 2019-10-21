@@ -123,16 +123,15 @@ module Endo : sig
       over type [T.t] *)
   module Make (T : Triv.S) : S with type t = (T.t -> T.t)
 
-  (** [make x] is a first order module implementing the [Endo] semigroup for
-      functions [(t -> t)] where [t] is the type of the arbitrary value [x].
+  (** [make (Proxy : t Util.proxy)] is a first order module implementing the
+      [Endo] semigroup for functions [(t -> t)].
 
-      Note that [x] is only used for it's type, and the particular value
-      supplied has no effect.
+      Note that [Proxy] is used only to convey the type. See {!type:Util.proxy}.
 
       You can lift the result back into the module like so:
 
       {[
-        # module E = (val Semigroup.Endo.make 1);;
+        # module E = (val Semigroup.Endo.make (Util.Proxy : int proxy));;
         module E :
         sig
           type t = int -> int
@@ -141,7 +140,7 @@ module Endo : sig
           val concat : t NonEmptyList.t -> t
         end
       ]} *)
-  val make : 'a -> (module S with type t = 'a -> 'a)
+  val make : 'a Util.proxy -> (module S with type t = 'a -> 'a)
 end
 
 (** [Dual] allows constructing the dual semigroup for a given semigroup.

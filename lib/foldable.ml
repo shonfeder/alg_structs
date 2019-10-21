@@ -19,11 +19,11 @@ end
 
 module Law (F : S) = struct
   let fold_right (type a) f (init : a) t =
-    let m = Monoid.Endo.make init in
+    let m = Monoid.Endo.make (Proxy : a Util.proxy) in
     F.fold_right ~f ~init t = (F.fold_map ~m ~f t) init
 
   let fold_left (type a) f (init : a) t =
-    let m = Monoid.Endo.make init |> Monoid.Dual.dualize in
+    let m = Monoid.Endo.make (Proxy : a Util.proxy) |> Monoid.Dual.dualize in
     F.fold_right ~f ~init t = (F.fold_map ~m ~f:(Fun.flip f) t) init
 
   let fold (type a) (module M : Monoid.S with type t = a) (t : a F.t) =

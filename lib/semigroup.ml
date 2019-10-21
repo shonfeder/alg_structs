@@ -81,7 +81,7 @@ module Endo = struct
     include (val make compose)
   end
 
-  let make (type a) (_ : a) =
+  let make (type a) (_ : a Util.proxy) =
     let module Triv = struct type t = a end in
     (module Make (Triv) : S with type t = a -> a)
 end
