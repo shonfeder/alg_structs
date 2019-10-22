@@ -1,4 +1,4 @@
-(** [Proxy : 'a] is a proxy for type ['a], allowing to pass the type around
+(** [Proxy : 'a] is a proxy for type ['a], allowing one to pass the type around
     without having to present a witnessing value.
 
     See Haskell's
