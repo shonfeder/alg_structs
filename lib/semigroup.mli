@@ -1,14 +1,33 @@
-(** TODO Description *)
+(** An interface for a type with a binary, associative operator over it.
+
+    "A semigroup is an algebraic structure consisting of a set together with an
+    associative binary operation" ({{:https://en.wikipedia.org/wiki/Semigroup}
+    wikipedia)}.
+
+    "The term 'semigroup' is standard, but semi-monoid would be more
+    systematic." {{:https://ncatlab.org/nlab/show/semigroup} ncatlab}
+
+    Modules that implement the semigroup interface are a structural subtype of
+    the better known {{!module-type:Monoid.S} Monoids} interface. Semigroups are
+    differentiated from Monoids by the absence of a unit (or identity) element.
+    in their specification. *)
 
 (** {1 Seed} *)
 
 (** The [Seed] needed to generate an implementation of {{!module-type:S}
-    Semigroup} for the type {{!type:Seed.t} t} *)
+    Semigroup} for the type {{!type:Seed.t} t}. *)
 module type Seed = sig
+
+  (** The principle (and sole) type.
+
+      We can think of this set-theoretically as the carrier set of the algebraic
+      structure or category-theoretically as the single object in the category,
+      with each element being a morphism [t -> t]. *)
   type t
 
   (** [op x y] is an associative operation over all elements [x] and [y] of type
-      {!type:t} *)
+      {!type:t}. Category-theoretically, this is the composition of
+      morphisms. *)
   val op : t -> t -> t
 end
 
@@ -30,12 +49,25 @@ module type S = sig
   (** The infix version of {!val:op}. *)
   val ( * ) : t -> t -> t
 
+  (** [concat xs] is the concatenation of all elements of [xs] into a single
+      value using [op].
+
+      This is equivalent to [List.fold_right op (NonEmptyList.tl xs)
+      (NonEmptyList.hd xs)]. *)
   val concat : t NonEmptyList.t ->  t
 end
 
 module type S1 = sig
   include Seed1
+
+  (** The infix for {!val:op}. *)
   val ( * ) : 'a t -> 'a t -> 'a t
+
+  (** [concat xs] is the concatenation of all elements of [xs] into a single
+      value using [op].
+
+      This is equivalent to [List.fold_right op (NonEmptyList.tl xs)
+      (NonEmptyList.hd xs)]. *)
   val concat : 'a t NonEmptyList.t -> 'a t
 end
 
@@ -51,7 +83,11 @@ end
     @param S An implementation of a {{!module-type: S} Semigroup} *)
 module Law (S : S) : sig
 
-  (** [associativity x y z]: [S.(x * (y * z)) = S.((x * y) * z)] *)
+  (** [associativity x y z] is [true] when
+
+      {[
+        S.(x * (y * z)) = S.((x * y) * z)
+      ]} *)
   val associativity : S.t -> S.t -> S.t -> bool
 end
 
@@ -72,19 +108,54 @@ val make : ('a -> 'a -> 'a) -> (module S with type t = 'a)
 
 (** {1 Implementations} *)
 
-(** TODO Document implementations *)
-
+(** Semigroups over {!type:bool} *)
 module Bool : sig
+
+  (** [op] is [(||)] *)
   module Or : S with type t = bool
+
+  (** [op] is [(&&)] *)
   module And : S with type t = bool
 end
 
+(** Semigroups over {!type:int} *)
 module Int : sig
+
+  (** [op] is [(+)] *)
   module Sum : S with type t = int
+
+  (** [op] is [( * )]*)
   module Product : S with type t = int
 end
 
+(** Semigroups over option types *)
 module Option : sig
+
+  (** [Make (S)] is a semigroup where [op a b] is...
+
+      - [None] if both [a] and [b] are [None]
+      - [Some v] if only one of [a] or [b] are [Some v]
+      - [Some (S.op a' b')] if [b] is [Some b'] and [a] is [Some a']
+
+      This enables chains of associations over optional values that preserves
+      any values that may be present. E.g.,
+
+      {[
+        # module O = Semigroup.Option.Make ((val Semigroup.make ( * )));;
+        module O :
+        sig
+          type t = int option
+          val op : t -> t -> t
+          val ( * ) : t -> t -> t
+          val concat : t NonEmptyList.t -> t
+        end
+
+        # O.(Some 2 * None * None * Some 2);;
+        - : O.t = Option.Some 4
+      ]}
+
+      @param S An implementation of {{!module-type:S} Semigroup}
+  *)
   module Make (S : S) : S with type t = S.t Option.t
 end
 
@@ -123,7 +194,7 @@ module Endo : sig
       over type [T.t] *)
   module Make (T : Triv.S) : S with type t = (T.t -> T.t)
 
-  (** [make (Proxy : t Util.proxy)] is a first order module implementing the
+  (** [make (Proxy : t Util.proxy)] is a first-class module implementing the
       [Endo] semigroup for functions [(t -> t)].
 
       Note that [Proxy] is used only to convey the type. See {!type:Util.proxy}.
