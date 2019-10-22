@@ -12,6 +12,7 @@ module type S = sig
   val is_empty : 'a t -> bool
   val length : 'a t -> int
   val any : f:('a -> bool) -> 'a t -> bool
+  val all : f:('a -> bool) -> 'a t -> bool
   val mem : 'a t -> 'a -> equal:('a -> 'a -> bool) -> bool
   val max : compare:('a -> 'a -> int) -> 'a t -> 'a option
   val min : compare:('a -> 'a -> int) -> 'a t -> 'a option
@@ -61,6 +62,7 @@ module Make (Seed : Seed) : S with type 'a t = 'a Seed.t = struct
   let is_empty t = fold_right ~f:(fun _ _ -> false) ~init:true t
   let length t = fold_left ~f:(fun c _ -> c + 1) ~init:0 t
   let any ~f t = fold_map ~m:(module Monoid.Bool.Or) ~f t
+  let all ~f t = fold_map ~m:(module Monoid.Bool.And) ~f t
   let mem t x ~equal = any ~f:(fun y -> equal x y) t
 
   let max (type a) ~compare t =
@@ -79,18 +81,6 @@ module Make (Seed : Seed) : S with type 'a t = 'a Seed.t = struct
     (* (fold_map ~f:(_max compare) t) *)
 
 end
-
-(* This is currently impossible with OCamls module sytems :( since
- * first class modules do not support type sharing of types with parameters
- * (This is a symptom of having to support for higher kinded types )
- *
- * let make (type a) fold_right =
- *   let module Seed = (struct
- *     type _ t = a
- *     let fold_right = fold_right
- *   end : Seed)
- *   in
- *   (module Make (Seed) : S) *)
 
 module Option : S with type 'a t = 'a Option.t = struct
   module Seed = struct
