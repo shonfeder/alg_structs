@@ -136,4 +136,5 @@ let () =
     [ functor_laws
     ; semigroup_laws
     ; applicative_laws
+    ; foldable_laws
     ]
