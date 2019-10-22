@@ -82,13 +82,25 @@ module Law (M : S) : sig
       ]} *)
   val associativity : M.t -> M.t -> M.t -> bool
 
-  (** TODO *)
+  (** [unit_right_cancelation x] is [true] when
+
+      {[
+        S.(x * unit) = unit
+      ]} *)
   val unit_right_cancelation : M.t -> bool
 
-  (** TODO *)
+  (** [unit_left_cancelation x] is [true] when
+
+      {[
+        S.(unit * x) = unit
+      ]} *)
   val unit_left_cancelation : M.t -> bool
 
-  (** TODO (M.mconcat xs) = List.fold_right M.op xs M.unit *)
+  (** [mconcat_is_a_fold_right xs] is [true] when
+
+      {[
+        (M.mconcat xs) = List.fold_right M.op xs M.unit
+      ]} *)
   val mconcat_is_a_fold_right : M.t list -> bool
 end
 
