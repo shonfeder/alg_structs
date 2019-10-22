@@ -85,6 +85,60 @@ let semigroup_laws =
       end);
     ]
 
+let monoid_laws =
+  let open Alg_structs_qcheck.Monoid in
+  suite "Monoid Laws" @@ tests
+    [
+      (module struct
+        include Monoid.Bool.Or
+        let name = "Bool.Or"
+        let arbitrary = bool
+      end);
+
+      (module struct
+        include Monoid.Bool.And
+        let name = "Bool.And"
+        let arbitrary = bool
+      end);
+
+      (module struct
+        include Monoid.Int.Sum
+        let name = "Int.Sum"
+        let arbitrary = int
+      end);
+
+      (module struct
+        include Monoid.Int.Product
+        let name = "Int.Sum"
+        let arbitrary = int
+      end);
+
+      (module struct
+        include Monoid.Option.Make (Monoid.Bool.Or)
+        let name = "Option.Make (Bool.Or)"
+        let arbitrary = option bool
+      end);
+
+      (module struct
+        include Monoid.Option.Make (Monoid.Int.Sum)
+        let name = "Option.Make (Int.Sum)"
+        let arbitrary = option int
+      end);
+
+      (* TODO Figure out if it's possible to test this using the framework,
+              or it needs a custom test written *)
+      (* (module struct
+       *   include (val Monoid.Endo.make 1)
+       *   let name = "Monoid.Endo for (int -> int)"
+       *   let arbitrary = Alg_structs_qcheck.Utils.int_fun
+       * end) *)
+
+      (module struct
+        include Monoid.Dual.Make (Monoid.Int.Sum)
+        let name = "Dual.Make (Int.Sum)"
+        let arbitrary = int
+      end);
+    ]
 let applicative_laws =
   let open Alg_structs_qcheck.Applicative in
   suite "Applicative Laws" @@ tests
@@ -135,6 +189,7 @@ let () =
   Alcotest.run "alg"
     [ functor_laws
     ; semigroup_laws
+    ; monoid_laws
     ; applicative_laws
     ; foldable_laws
     ]

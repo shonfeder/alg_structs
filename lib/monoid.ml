@@ -1,22 +1,44 @@
-module type S = sig
-  include Semigroup.S
-  val unit : t
-  val mconcat : t list -> t
-end
+(* Specification *)
 
 module type Seed = sig
   include Semigroup.Seed
   val unit : t
 end
 
-module Make (B : Seed) : S with type t = B.t = struct
-  include B
-  include Semigroup.Make (B)
+module type S = sig
+
+  (* Properly speaking, we could include the [Seed], but that obfuscates the
+     docs, and this signature is equivalent *)
+
+  include Semigroup.S
+  val unit : t
+
+  val mconcat : t list -> t
+end
+
+
+(* Laws *)
+
+module Law (M : S) = struct
+
+  include Semigroup.Law (M)
+
+  let unit_right_cancelation x = M.(x * unit) = x
+
+  let unit_left_cancelation x = M.(unit * x) = x
+
+  let mconcat_is_a_fold_right xs = (M.mconcat xs) = List.fold_right M.op xs M.unit
+end
+
+
+(* Constructors *)
+
+module Make (Seed : Seed) : S with type t = Seed.t = struct
+  include Seed
+  include Semigroup.Make (Seed)
 
   let mconcat t = List.fold_left op unit t
 end
-
-(* Constructors *)
 
 let make (type a) unit op =
   let module Seed = (struct
@@ -34,6 +56,7 @@ let of_semigroup (type a) (module S : Semigroup.S with type t = a) unit =
   end : Seed with type t = a)
   in
   (module Make (Seed) : S with type t = a)
+
 
 (* Implementations *)
 

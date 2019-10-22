@@ -12,5 +12,6 @@ module Applicative = Applicative
 (** QCheck tests of laws {{!module:Alg_structs.Semigroup.Law} Semigroup Laws} *)
 module Semigroup = Semigroup
 
-(** QCheck tests of laws {{!module:Alg_structs.Foldable.Law} Foldable Laws} *)
+(** QCheck tests of {{!module:Alg_structs.Monoid.Law} Monoid Laws} *)
+module Monoid = Monoid
 module Foldable = Foldable
