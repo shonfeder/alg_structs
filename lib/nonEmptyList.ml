@@ -21,3 +21,9 @@ let concat op xs =
     | [] -> x
   in
   aux x xs
+
+let of_list = function
+  | x :: xs -> Some (Cons (x, xs))
+  | []      -> None
+
+let to_list (Cons (x, xs)) = x :: xs

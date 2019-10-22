@@ -35,3 +35,10 @@ val op : 'a t -> 'a t -> 'a t
 
 (** See [List.concat]. *)
 val concat : ('a -> 'a -> 'a) -> 'a t -> 'a
+
+(** [of_list xs] is a [Some] non-empty list of [xs] if [xs] isn't empty.
+    Otherwise it is [None]. *)
+val of_list : 'a list -> 'a t option
+
+(** [to_list t] is the list of the elements in [t]. *)
+val to_list : 'a t -> 'a list
