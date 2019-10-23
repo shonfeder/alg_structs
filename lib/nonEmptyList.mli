@@ -34,7 +34,7 @@ val append : 'a t -> 'a t -> 'a t
 val op : 'a t -> 'a t -> 'a t
 
 (** See [List.concat]. *)
-val concat : ('a -> 'a -> 'a) -> 'a t -> 'a
+val fold : ('a -> 'a -> 'a) -> 'a t -> 'a
 
 (** [of_list xs] is a [Some] non-empty list of [xs] if [xs] isn't empty.
     Otherwise it is [None]. *)

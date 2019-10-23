@@ -14,13 +14,9 @@ let append (Cons (x, xs)) (Cons (y, ys)) =
 
 let op = append
 
-let concat op xs =
+let fold op xs =
   let (x, xs) = uncons xs in
-  let rec aux x = function
-    | x' :: xs -> op x (aux x' xs)
-    | [] -> x
-  in
-  aux x xs
+  List.fold_left op x xs
 
 let of_list = function
   | x :: xs -> Some (Cons (x, xs))

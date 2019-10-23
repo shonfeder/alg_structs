@@ -28,7 +28,7 @@ module Make (S:Seed) : S with type t = S.t = struct
   include S
   let ( * ) a b = op a b
 
-  let concat xs = NonEmptyList.concat op xs
+  let concat xs = NonEmptyList.fold op xs
 
   (* TODO repeated apply *)
 end
@@ -36,7 +36,7 @@ end
 module Make1 (Seed: Seed1) : S1 with type 'a t = 'a Seed.t = struct
   include Seed
   let ( * ) a b = op a b
-  let concat xs = NonEmptyList.concat op xs
+  let concat xs = NonEmptyList.fold op xs
 end
 
 let make (type a) op =
@@ -81,9 +81,8 @@ module Endo = struct
     include (val make compose)
   end
 
-  let make (type a) (_ : a Util.proxy) =
-    let module Triv = struct type t = a end in
-    (module Make (Triv) : S with type t = a -> a)
+  let make (type a) (proxy : a Util.proxy) =
+    (module Make (val Triv.make proxy) : S with type t = a -> a)
 end
 
 module Dual = struct
@@ -93,4 +92,9 @@ module Dual = struct
   end
 
   let make op = make (Fun.flip op)
+end
+
+module NonEmptyList = struct
+  include NonEmptyList
+  include Make1 (NonEmptyList)
 end
