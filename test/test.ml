@@ -1,8 +1,6 @@
 open QCheck
 open Alg_structs
 
-let property name = Test.make ~name
-
 let suite name tests =
   let tests = List.map QCheck_alcotest.to_alcotest tests in
   (name, tests)
@@ -70,14 +68,6 @@ let semigroup_laws =
         let arbitrary = option int
       end);
 
-      (* TODO Figure out if it's possible to test this using the framework,
-              or it needs a custom test written *)
-      (* (module struct
-       *   include (val Semigroup.Endo.make 1)
-       *   let name = "Semigroup.Endo for (int -> int)"
-       *   let arbitrary = Alg_structs_qcheck.Utils.int_fun
-       * end) *)
-
       (module struct
         include Semigroup.Dual.Make (Semigroup.Int.Sum)
         let name = "Dual.Make (Int.Sum)"
@@ -125,20 +115,13 @@ let monoid_laws =
         let arbitrary = option int
       end);
 
-      (* TODO Figure out if it's possible to test this using the framework,
-              or it needs a custom test written *)
-      (* (module struct
-       *   include (val Monoid.Endo.make 1)
-       *   let name = "Monoid.Endo for (int -> int)"
-       *   let arbitrary = Alg_structs_qcheck.Utils.int_fun
-       * end) *)
-
       (module struct
         include Monoid.Dual.Make (Monoid.Int.Sum)
         let name = "Dual.Make (Int.Sum)"
         let arbitrary = int
       end);
     ]
+
 let applicative_laws =
   let open Alg_structs_qcheck.Applicative in
   suite "Applicative Laws" @@ tests
