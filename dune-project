@@ -15,6 +15,8 @@
  (depends
   (dune (and :build (>= 1.11.3)))
 
+  (ppx_deriving (>= 4.4))
+
   (alcotest (and :with-test (>= 0.8.5)))
   (qcheck (and :with-test (>= 0.11)))
   (qcheck-alcotest (and :with-test (>= 0.11)))

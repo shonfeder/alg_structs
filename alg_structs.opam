@@ -8,6 +8,7 @@ homepage: "TODO"
 bug-reports: "TODO"
 depends: [
   "dune" {build & >= "1.11.3"}
+  "ppx_deriving" {>= "4.4"}
   "alcotest" {with-test & >= "0.8.5"}
   "qcheck" {with-test & >= "0.11"}
   "qcheck-alcotest" {with-test & >= "0.11"}
