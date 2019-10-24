@@ -7,7 +7,7 @@
 An OCaml library specifying algebraic structures useful in the design and
 implementation of software.
 
-There are currently no external dependencies.
+The only external dependency currently is =ppx_deriving=.
 
 I wrote this library because I needed these structures for other projects, and
 they were not available via any packages published on Opam at the time.
