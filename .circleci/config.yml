@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: shonfeder/ocaml-ci-docker:20191023
+
+    steps:
+      - checkout
+
+      - run:
+          name: Build
+          command: |
+            opam install ./alg_structs.opam --with-test -y
+            opam install ./alg_structs_qcheck.opam --with-test -y
+
+      - run:
+          name: Run tests
+          command: |
+            eval $(opam env)
+            dune runtest
