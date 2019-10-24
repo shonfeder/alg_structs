@@ -33,11 +33,23 @@ Assuming you have
 open Alg_structs
 #+END_SRC
 
-*** to map over lists
+*** applying to optional values
 
 #+BEGIN_SRC ocaml
-Applicative.List.((+) <@> [1;2;3] <*> [-1;-2;-3])
-(* - : int list = List.(::) (0, [-1; -2; 1; 0; -1; 2; 1; 0]) *)
+Applicative.Option.((^) <@> Some "a" <*> Some "b")
+- : string option = Option.Some "ab"
+#+END_SRC
+
+#+BEGIN_SRC ocaml
+Applicative.Option.((^) <@> Some "a" <*> None)
+- : string option = Option.None
+#+END_SRC
+
+*** applying to all combinations of list elements
+
+#+BEGIN_SRC ocaml
+Applicative.List.((^) <@> ["a";"b"] <*> ["1";"2"])
+(* - : string list = ["a1"; "a2"; "b1"; "b2"] *)
 #+END_SRC
 
 *** for [[https://caml.inria.fr/pub/docs/manual-ocaml/manual046.html][binding operators]]

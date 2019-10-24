@@ -68,11 +68,11 @@ Assuming you have
 open Alg_structs
 ]}
 
-{3 to map over lists}
+{3 applying to lists}
 
 {[
-Applicative.List.((+) <@> [1;2;3] <*> [-1;-2;-3]);;
-(* - : int list = List.(::) (0, [-1; -2; 1; 0; -1; 2; 1; 0]) *)
+Applicative.List.((^) <@> ["a";"b"] <*> ["1";"2"])
+(* - : string list = ["a1"; "a2"; "b1"; "b2"] *)
 ]}
 
 {3 for binding operators}
