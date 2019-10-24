@@ -1,5 +1,7 @@
 #+TITLE: =alg_structs=: Algebraic Structures in OCaml Structs
 
+*NOTE* The API is an unstable state!
+
 An OCaml library specifying algebraic structures useful in the design and
 implementation of software.
 
@@ -19,6 +21,11 @@ structures, implemented via typeclasses. Most of the code in here started out as
 direct ports of the corresponding Haskell typeclasses. However, I have taken
 liberties to adapt the implementations to be more amenable to idiomatic OCaml
 where it seemed appropriate.
+
+* Contents                                                              :TOC_1:
+- [[#examples][Examples]]
+- [[#related-work][Related work]]
+- [[#tasks][Tasks]]
 
 * Examples
 
@@ -168,5 +175,7 @@ future sources of inspiration:
 ** TODO Add CoC
 ** TODO Add CONTRIBUTING file
 ** TODO Add a support adapter package for integration with Base/Core
+** TODO Add more structures
+** TODO Redesign API so extending implementations won't break backwards compatibility
 ** TODO Expanded implementations of common data types
 ** TODO Study Morrison's =ocaml-cats= and incorporate relevent design and implementation choices
