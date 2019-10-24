@@ -11,7 +11,7 @@
 (maintainers "shon.feder@gmail.com")
 (homepage "https://github.com/shonfeder/alg_structs")
 (bug_reports "https://github.com/shonfeder/alg_structs/issues")
-(documentation "TODO")
+(documentation "https://shonfeder.github.io/alg_structs/")
 
 (package
  (name alg_structs)
