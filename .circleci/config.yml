@@ -19,7 +19,7 @@ jobs:
             export TERM=dumb
             eval $(opam env)
             # If the switch creation fails, assume it's because it already exists
-            opam switch create . 4.09 --yes --with-test || true
+            opam switch create . ocaml-base-compiler.4.09.0 --yes --with-test || true
 
       # NOTE We must dump the dune rules after installing the package
       # dependencies, since Successful runs of `dune rules` may depend on
