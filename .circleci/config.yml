@@ -13,13 +13,14 @@ jobs:
             - opam-cache-{{ checksum "alg_structs.opam" }}
 
       - run:
-          name: Create OPAM Switch
-          # Also installs all project dependencies
+          name: Create Switch or Install Dependencies
           command: |
             export TERM=dumb
             eval $(opam env)
             # If the switch creation fails, assume it's because it already exists
-            opam switch create . ocaml-base-compiler.4.09.0 --yes --with-test --deps-only || true
+            opam switch create . ocaml-base-compiler.4.09.0 --yes --with-test --deps-only \
+            || opam install . --yes --with-test --deps-only
+
 
       # NOTE We must dump the dune rules after installing the package
       # dependencies, since Successful runs of `dune rules` may depend on
