@@ -173,12 +173,14 @@ future sources of inspiration:
   currently, but it is undocummented and doesn't appear to include tests.
 
 * Tasks
-** TODO Set up CI
-** TODO Set docs to build into github page
 ** TODO Add CoC
 ** TODO Add CONTRIBUTING file
 ** TODO Add a support adapter package for integration with Base/Core
 ** TODO Add more structures
-** TODO Redesign API so extending implementations won't break backwards compatibility
+- [ ] Alternative (and kin)
+- [ ] Monads
+- [ ] Free Monads?
+- [ ] Traversable
 ** TODO Expanded implementations of common data types
+** TODO Redesign API so extending implementations won't break backwards compatibility
 ** TODO Study Morrison's =ocaml-cats= and incorporate relevent design and implementation choices
