@@ -4,20 +4,23 @@
 (generate_opam_files true)
 
 (authors "Shon Feder")
+(license MIT)
+(source (github shonfeder/alg_structs))
 (maintainers "shon.feder@gmail.com")
 (homepage "https://github.com/shonfeder/alg_structs")
 (bug_reports "https://github.com/shonfeder/alg_structs/issues")
+(documentation "TODO")
 
 (package
  (name alg_structs)
  (synopsis "Interfaces and module combinators for algebraic structures")
- (description
-   "\| An experimental library for programming with algebraic and
-   "\| category-theoretic structures in OCaml.
-   "\|
-   "\| Currently, implemented structures include applicative, foldable, functor,
-   "\| monoid, and semigroup.
-)
+ (description "
+An experimental library for programming with algebraic and category-theoretic
+structures in OCaml.
+
+Currently, implemented structures include applicative, foldable, functor, monoid,
+and semigroup.
+")
  (depends
   (dune (and :build (>= 1.11.3)))
 
