@@ -20,6 +20,97 @@ direct ports of the corresponding Haskell typeclasses. However, I have taken
 liberties to adapt the implementations to be more amenable to idiomatic OCaml
 where it seemed appropriate.
 
+* Examples
+
+** =Applicative=
+
+# TODO: Link to docs
+# See {{!module:Alg_structs.Applicative} Applicative}.
+
+Assuming you have
+
+#+BEGIN_SRC ocaml
+open Alg_structs
+#+END_SRC
+
+*** to map over lists
+
+#+BEGIN_SRC ocaml
+Applicative.List.((+) <@> [1;2;3] <*> [-1;-2;-3])
+(* - : int list = List.(::) (0, [-1; -2; 1; 0; -1; 2; 1; 0]) *)
+#+END_SRC
+
+*** for [[https://caml.inria.fr/pub/docs/manual-ocaml/manual046.html][binding operators]]
+
+**** on options
+
+#+BEGIN_SRC ocaml
+let some_sum =
+  let open Option.Let_bind
+  in
+  let+ x = Some 1
+  and+ y = Some 2
+  and+ z = Some 3
+  in
+  x + y + z
+
+let () = assert (some_sum = Some 6)
+#+END_SRC
+
+**** on lists
+
+#+BEGIN_SRC ocaml
+let tupples_of_list_elements =
+  let open List.Let_bind in
+  let+ x = [1; 2]
+  and+ y = ['a'; 'b']
+  in
+  (x, y)
+
+let () = assert (tupples_of_list_elements =
+                 [(1, 'a'); (1, 'b');
+                  (2, 'a'); (2, 'b')])
+#+END_SRC
+
+** =Foldable=
+
+# TODO Link to docs
+# See {{!module:Alg_structs.Foldable} Foldable}.
+
+*** implementing a tree
+
+#+BEGIN_SRC ocaml
+module Tree = struct
+  module T = struct
+    type 'a t = Nil | Leaf of 'a | Node of 'a t * 'a * 'a t
+
+    let rec fold_right ~f t ~init = match t with
+      | Nil -> init
+      | Leaf x -> f x init
+      | Node (l, x, r) -> fold_right ~f ~init:(f x (fold_right ~f ~init r)) l
+  end
+  include T
+  include (Make (T) : S with type 'a t = 'a T.t)
+end
+#+END_SRC
+
+*** using the functions
+
+#+BEGIN_SRC ocaml
+let tree = Tree.T.Node(Leaf 1, 2, Node (Leaf 4, 3, Leaf 5))
+
+Tree.max tree ~compare:Int.compare
+(* - : int option = Some 5 *)
+
+Tree.min tree ~compare:Int.compare
+(* - : int option = Some 1 *)
+
+Tree.to_list tree
+(* - : int list = [1; 2; 4; 3; 5] *)
+
+Tree.length tree
+(* - : int = 5 *)
+#+END_SRC
 * Related work
 
 ** Resources consulted
