@@ -1,6 +1,6 @@
 #+TITLE: =alg_structs=: Algebraic Structures in OCaml Structs
 
-*NOTE* The API is an unstable state!
+*NOTE* The API currently unstable!
 
 An OCaml library specifying algebraic structures useful in the design and
 implementation of software.
