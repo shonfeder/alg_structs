@@ -1,7 +1,7 @@
-(** Applicative functors "allow sequencing of functorial computations"
-    ({{:https://en.wikipedia.org/wiki/Applicative_functor} wikipedia}) with
-    the limitation that "values computed by subcomputations cannot affect what
-    subsequent computations will take place"
+(** Applicative {{!module:Functor} functors} "allow sequencing of functorial
+    computations" ({{:https://en.wikipedia.org/wiki/Applicative_functor}
+    wikipedia}) with the limitation that "values computed by subcomputations
+    cannot affect what subsequent computations will take place"
     ({{:https://ocaml.janestreet.com/ocaml-core/latest/doc/base/Base__/Applicative_intf/index.html}
     Core docs}).
 
@@ -43,9 +43,6 @@ module type S = sig
       {!type:t} and then applied to both [x] and [y]. *)
   val map2 : 'a t -> 'b t -> f:('a -> 'b -> 'c) -> 'c t
 
-  (** [f <$> x] is [map ~f x] which is the same as [return f <*> x] *)
-  val ( <$> ) : ('a -> 'b) -> 'a t -> 'b t
-
   (** [(F f) <*> (F x)] is [F (f x)] *)
   val ( <*> ) : ('a -> 'b) t -> 'a t -> 'b t
 
@@ -67,7 +64,7 @@ module type S = sig
     (** [let+ x = t in f x] is [map ~f t] *)
     val (let+) : 'a t -> ('a -> 'b) -> 'b t
 
-    (** [let+ x = t and+ y = t' in f x y] is [f <$> t <*> t'] *)
+    (** [let+ x = t and+ y = t' in f x y] is [f <@> t <*> t'] *)
     val (and+) : 'a t -> 'b t -> ('a * 'b) t
   end
 end
@@ -111,11 +108,11 @@ module Make (B : Seed) : S with type 'a t = 'a B.t
 
 (** [Option] provides sequencing of partial computations. E.g,
 
-    [# Option.((+) <$> Some 5 <*> Some 7);;]
+    [# Option.((+) <@> Some 5 <*> Some 7);;]
 
     [- : int option = Option.Some 12]
 
-    [# Option.((+) <$> None <*> Some 5);;]
+    [# Option.((+) <@> None <*> Some 5);;]
 
     [- : int option = Option.None] *)
 module Option : S with type 'a t = 'a Option.t
@@ -127,7 +124,7 @@ module Option : S with type 'a t = 'a Option.t
     E.g., to get all pairs that can be formed by selecting first and second
     elements from the respective lists:
 
-    [# let x = List.NonDet.((fun x y -> (x, y)) <$> [1;2] <*> ['a';'b']);;]
+    [# let x = List.NonDet.((fun x y -> (x, y)) <@> [1;2] <*> ['a';'b']);;]
 
     [- : (int * char) list = [(1, 'a'); (1, 'b'); (2, 'a'); (2, 'b')] ] *)
 module List : S with type 'a t = 'a List.t

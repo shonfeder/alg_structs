@@ -8,7 +8,6 @@ module type S = sig
   include Seed
   val map2 : 'a t -> 'b t -> f:('a -> 'b -> 'c) -> 'c t
 
-  val ( <$> ) : ('a -> 'b) -> 'a t -> 'b t
   val ( <*> ) : ('a -> 'b) t -> 'a t -> 'b t
   val ( *> )  : 'a t -> 'b t -> 'b t
   val ( <* )  : 'a t -> 'b t -> 'a t
@@ -25,7 +24,6 @@ module Make (B : Seed) : S with type 'a t = 'a B.t  = struct
   include B
   let map2 a b ~f = apply (B.map ~f a) b
 
-  let ( <$> ) f x = map ~f x
   let ( <*> ) = apply
   let ( *> ) a b = map2 ~f:Fun.(flip const) a b
   let ( <* ) a b = map2 ~f:Fun.const a b

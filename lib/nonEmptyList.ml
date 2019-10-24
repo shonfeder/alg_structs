@@ -2,10 +2,14 @@ type 'a t =
   | Cons of 'a * 'a list
 [@@deriving eq, ord]
 
+module Functor_seed = struct
+  type nonrec 'a t = 'a t
+  let map ~f (Cons (x, xs)) = Cons (f x, List.map f xs)
+end
+include (Functor.Make (Functor_seed) : Functor.S with type 'a t := 'a t)
+
 let cons x (Cons (x', xs)) = Cons (x, x' :: xs)
 let uncons (Cons (x, xs)) = (x, xs)
-
-let map ~f (Cons (x, xs)) = Cons (f x, List.map f xs)
 
 let hd (Cons (x, _))  = x
 let tl (Cons (_, xs)) = xs
