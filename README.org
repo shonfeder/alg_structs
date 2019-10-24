@@ -2,15 +2,28 @@
 
 @@html:<img src="https://circleci.com/gh/shonfeder/alg_structs.svg?style=svg" alt="Circle CI Badge">@@
 
-*NOTE* The API currently unstable!
+*NOTE:* The API is currently unstable!
 
 An OCaml library specifying algebraic structures useful in the design and
 implementation of software.
 
+[[https://shonfeder.github.io/alg_structs/][Documentation]]
+
+* Contents                                                              :TOC_1:
+- [[#summary][Summary]]
+- [[#installation][Installation]]
+- [[#examples][Examples]]
+- [[#related-work][Related work]]
+- [[#tasks][Tasks]]
+
+* Summary
+=alg_structs= is an OCaml library specifying algebraic structures useful in the
+design and implementation of software.
+
 The only external dependency currently is =ppx_deriving=.
 
 I wrote this library because I needed these structures for other projects, and
-they were not available via any packages published on Opam at the time.
+they were not available via any packages published on opam at the time.
 
 I view this library as an experiment to determine whether easy access to such
 mechanisms can be used to any advantage in OCaml programs. Subsequent versions
@@ -24,10 +37,25 @@ direct ports of the corresponding Haskell typeclasses. However, I have taken
 liberties to adapt the implementations to be more amenable to idiomatic OCaml
 where it seemed appropriate.
 
-* Contents                                                              :TOC_1:
-- [[#examples][Examples]]
-- [[#related-work][Related work]]
-- [[#tasks][Tasks]]
+* Installation
+
+** With opam
+
+Requires [[https://opam.ocaml.org/doc/Install.html][opam]]
+
+#+BEGIN_SRC sh
+opam install alg_structs
+#+END_SRC
+
+** Building from source
+
+Requires [[https://github.com/ocaml/dune#installation][dune]]
+
+#+BEGIN_SRC
+git clone git@github.com:shonfeder/alg_structs.git
+cd alg_structs
+dune build
+#+END_SRC
 
 * Examples
 
