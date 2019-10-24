@@ -1,7 +1,9 @@
 (lang dune 1.11)
-(name alg_structs)
 
 (generate_opam_files true)
+
+(name alg_structs)
+(version 0.1.0)
 
 (authors "Shon Feder")
 (license MIT)
