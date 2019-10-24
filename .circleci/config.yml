@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   build:
     docker:
@@ -7,14 +8,45 @@ jobs:
     steps:
       - checkout
 
+      - restore_cache:
+          keys:
+            - opam-cache-{{ checksum "alg_structs.opam" }}
+
       - run:
-          name: Build
+          name: Create OPAM Switch
+          # Also installs all project dependencies
           command: |
-            opam install ./alg_structs.opam --with-test -y
-            opam install ./alg_structs_qcheck.opam --with-test -y
+            export TERM=dumb
+            eval $(opam env)
+            # If the switch creation fails, assume it's because it already exists
+            opam switch create . 4.09 --yes --with-test || true
+
+      # NOTE We must dump the dune rules after installing the package
+      # dependencies, since Successful runs of `dune rules` may depend on
+      # package dependencies, e.g., for ppx preprocessors.
+      - run:
+          name: Dump dune Rules
+          command: |
+            eval $(opam env)
+            dune rules > /tmp/dune-rules
+
+      - restore_cache:
+          keys:
+            - dune-cache-{{ checksum "/tmp/dune-rules" }}
 
       - run:
           name: Run tests
           command: |
             eval $(opam env)
             dune runtest
+
+      - save_cache:
+          key: dune-cache-{{ checksum "/tmp/dune-rules" }}
+          paths:
+            - _build
+
+      - save_cache:
+          key: opam-cache-{{ checksum "alg_structs.opam" }}
+          paths:
+            - _opam
+
