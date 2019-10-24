@@ -80,7 +80,8 @@ let () = assert (some_sum = Some 6)
 
 #+BEGIN_SRC ocaml
 let tupples_of_list_elements =
-  let open List.Let_bind in
+  let open List.Let_bind
+  in
   let+ x = [1; 2]
   and+ y = ['a'; 'b']
   in
