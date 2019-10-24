@@ -5,13 +5,19 @@
 
 (authors "Shon Feder")
 (maintainers "shon.feder@gmail.com")
-(homepage "TODO")
-(bug_reports "TODO")
+(homepage "https://github.com/shonfeder/alg_structs")
+(bug_reports "https://github.com/shonfeder/alg_structs/issues")
 
 (package
  (name alg_structs)
  (synopsis "Interfaces and module combinators for algebraic structures")
- (description "TODO")
+ (description
+   "\| An experimental library for programming with algebraic and
+   "\| category-theoretic structures in OCaml.
+   "\|
+   "\| Currently, implemented structures include applicative, foldable, functor,
+   "\| monoid, and semigroup.
+)
  (depends
   (dune (and :build (>= 1.11.3)))
 
@@ -25,7 +31,11 @@
 (package
  (name alg_structs_qcheck)
  (synopsis "Provides qCheck generators for laws of alg_structs")
- (description "TODO")
+ (description "
+Combinators for generating qCheck property based tests to check that
+implementations of the algebraic structures provided by alg_structs adhere to
+the stated laws.
+")
  (depends
   (dune (and :build (>= 1.11.3)))
 
