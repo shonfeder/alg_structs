@@ -12,7 +12,7 @@ maintainer: ["shon.feder@gmail.com"]
 authors: ["Shon Feder"]
 license: "MIT"
 homepage: "https://github.com/shonfeder/alg_structs"
-doc: "TODO"
+doc: "https://shonfeder.github.io/alg_structs/"
 bug-reports: "https://github.com/shonfeder/alg_structs/issues"
 depends: [
   "dune" {build & >= "1.11.3"}
