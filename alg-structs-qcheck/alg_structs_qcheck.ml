@@ -19,3 +19,8 @@ module Foldable = Foldable
 (** {1 Utilities} *)
 
 module Utils = Utils
+
+(**/**)
+(* Exported for use in testing of this package *)
+module Alg_structs = Alg_structs
+(**/**)

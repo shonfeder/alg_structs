@@ -1,7 +1,6 @@
 (test
  (name test)
- (libraries alg_structs
-            alg_structs_qcheck
+ (libraries alg_structs_qcheck
 
             alcotest
             qcheck

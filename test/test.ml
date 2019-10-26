@@ -1,5 +1,5 @@
 open QCheck
-open Alg_structs
+open Alg_structs_qcheck.Alg_structs
 
 let suite name tests =
   let tests = List.map QCheck_alcotest.to_alcotest tests in
