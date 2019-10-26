@@ -12,6 +12,10 @@
 
 ### Security
 
+## 0.1.1 (2019-19-25)
+
+- Fix packaging for internal deps
+
 ## 0.1.0 (2019-19-25)
 
 Initial release.
