@@ -18,7 +18,7 @@ jobs:
             export TERM=dumb
             eval $(opam env)
             # If the switch creation fails, assume it's because it already exists
-            opam switch create . ocaml-base-compiler.4.09.0 --yes --with-test --deps-only \
+            opam switch create . ocaml-base-compiler.4.09.0 --yes --with-test \
             || opam install . --yes --with-test
 
 
