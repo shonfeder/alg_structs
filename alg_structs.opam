@@ -17,7 +17,7 @@ homepage: "https://github.com/shonfeder/alg_structs"
 doc: "https://shonfeder.github.io/alg_structs/"
 bug-reports: "https://github.com/shonfeder/alg_structs/issues"
 depends: [
-  "dune" {build & >= "1.11.3"}
+  "dune" {>= "1.11.3"}
   "ppx_deriving" {>= "4.4"}
   "alcotest" {with-test & >= "0.8.5"}
   "qcheck" {with-test & >= "0.11"}

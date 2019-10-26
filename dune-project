@@ -24,7 +24,7 @@ Currently, implemented structures include applicative, foldable, functor, monoid
 and semigroup.
 ")
  (depends
-  (dune (and :build (>= 1.11.3)))
+  (dune (>= 1.11.3))
 
   (ppx_deriving (>= 4.4))
 
@@ -42,7 +42,9 @@ implementations of the algebraic structures provided by alg_structs adhere to
 the stated laws.
 ")
  (depends
-  (dune (and :build (>= 1.11.3)))
+  (alg_structs (and (>= 0.1.1) (< 0.2.0)))
+
+  (dune (>= 1.11.3))
 
   (qcheck (>= 0.11))
 ))
