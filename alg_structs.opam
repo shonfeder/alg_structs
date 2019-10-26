@@ -23,6 +23,9 @@ depends: [
   "qcheck" {with-test & >= "0.11"}
   "qcheck-alcotest" {with-test & >= "0.11"}
 ]
+dev-repo: "git+https://github.com/shonfeder/alg_structs.git"
+# We need to avoid "@runtest" for alg_structs, since it depends
+# On the alg_structs_qcheck package
 build: [
   ["dune" "subst"] {pinned}
   [
@@ -33,8 +36,6 @@ build: [
     "-j"
     jobs
     "@install"
-    "@runtest" {with-test}
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/shonfeder/alg_structs.git"
