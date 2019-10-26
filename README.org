@@ -2,7 +2,9 @@
 
 @@html:<img src="https://circleci.com/gh/shonfeder/alg_structs.svg?style=svg" alt="Circle CI Badge">@@
 
-*NOTE:* The API is currently unstable!
+*NOTE:* The API is currently unstable: "Major version zero (0.y.z) is for
+initial development. Anything MAY change at any time. The public API SHOULD NOT
+be considered stable." ([[https://semver.org/#spec-item-4][semver]])
 
 An OCaml library specifying algebraic structures useful in the design and
 implementation of software.
