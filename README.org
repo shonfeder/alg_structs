@@ -194,6 +194,13 @@ Projects which have not had an impact on the design of =alg_structs=
 but are related, and should be considered as alternatives to this library, and
 future sources of inspiration:
 
+- [[https://github.com/IndiscriminateCoding/clarity][clarity]] :: The stated goal of clarity is "to make pure functional programming
+  idioms as useful as possible given OCaml's absence of higher-kinded types and
+  typeclasses". Currently this library is slightly more extensive than
+  =alg_structs=. Two differentiating factors are =clarity='s focus on purity and
+  use of laziness and =alg_structs= emphasis on functions extending the base
+  structures.
+
 - Darin Morrison's [[https://github.com/freebroccolo/ocaml-cats][ocaml-cats]] :: Morrison's =ocaml-cats= is an impressive
   collection of category theoretic constructs. It includes specifications and
   implementations, and even support for (still experimental) modular implicits.
