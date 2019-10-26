@@ -3,7 +3,7 @@
 (generate_opam_files true)
 
 (name alg_structs)
-(version 0.1.0)
+(version 0.1.1)
 
 (authors "Shon Feder")
 (license MIT)
