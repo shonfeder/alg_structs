@@ -16,6 +16,7 @@ doc: "https://shonfeder.github.io/alg_structs/"
 bug-reports: "https://github.com/shonfeder/alg_structs/issues"
 depends: [
   "dune" {>= "1.11.3"}
+  "ocaml" {>= "4.08.0"}
   "alg_structs" {>= "0.1.2" & < "0.2.0"}
   "qcheck" {>= "0.11"}
   "alcotest" {with-test & >= "0.8.5"}

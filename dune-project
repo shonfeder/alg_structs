@@ -26,6 +26,7 @@ and semigroup.
  (depends
   (dune (>= 1.11.3))
 
+  (ocaml (>= 4.08.0))
   (ppx_deriving (>= 4.4))
 ))
 
@@ -40,6 +41,7 @@ the stated laws.
  (depends
   (dune (>= 1.11.3))
 
+  (ocaml (>= 4.08.0))
   (alg_structs (and (>= 0.1.2) (< 0.2.0)))
   (qcheck (>= 0.11))
 
