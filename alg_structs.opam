@@ -18,6 +18,7 @@ doc: "https://shonfeder.github.io/alg_structs/"
 bug-reports: "https://github.com/shonfeder/alg_structs/issues"
 depends: [
   "dune" {>= "1.11.3"}
+  "ocaml" {>= "4.08.0"}
   "ppx_deriving" {>= "4.4"}
 ]
 dev-repo: "git+https://github.com/shonfeder/alg_structs.git"
