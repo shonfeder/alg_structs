@@ -3,7 +3,7 @@
 (generate_opam_files true)
 
 (name alg_structs)
-(version 0.1.2)
+(version 0.1.3)
 
 (authors "Shon Feder")
 (license MIT)
@@ -42,7 +42,7 @@ the stated laws.
   (dune (>= 1.11.3))
 
   (ocaml (>= 4.08.0))
-  (alg_structs (and (>= 0.1.2) (< 0.2.0)))
+  (alg_structs (and (>= 0.1.3) (< 0.2.0)))
   (qcheck (>= 0.11))
 
   (alcotest (and :with-test (>= 0.8.5)))
