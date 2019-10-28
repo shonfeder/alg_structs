@@ -3,7 +3,7 @@
 (generate_opam_files true)
 
 (name alg_structs)
-(version 0.1.1)
+(version 0.1.2)
 
 (authors "Shon Feder")
 (license MIT)
@@ -27,10 +27,6 @@ and semigroup.
   (dune (>= 1.11.3))
 
   (ppx_deriving (>= 4.4))
-
-  (alcotest (and :with-test (>= 0.8.5)))
-  (qcheck (and :with-test (>= 0.11)))
-  (qcheck-alcotest (and :with-test (>= 0.11)))
 ))
 
 (package
@@ -42,9 +38,11 @@ implementations of the algebraic structures provided by alg_structs adhere to
 the stated laws.
 ")
  (depends
-  (alg_structs (and (>= 0.1.1) (< 0.2.0)))
-
   (dune (>= 1.11.3))
 
+  (alg_structs (and (>= 0.1.2) (< 0.2.0)))
   (qcheck (>= 0.11))
+
+  (alcotest (and :with-test (>= 0.8.5)))
+  (qcheck-alcotest (and :with-test (>= 0.11)))
 ))
