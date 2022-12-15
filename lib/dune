@@ -1,7 +1,6 @@
 (library
  (public_name alg_structs)
- (preprocess (pps ppx_deriving
-                  ppx_deriving.eq
+ (preprocess (pps ppx_deriving.eq
                   ppx_deriving.ord)))
 
 (documentation
